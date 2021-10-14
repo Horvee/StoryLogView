@@ -5,26 +5,26 @@
         <el-row class="rower">
             <el-col :span="6">
                 <p>TagName:</p>
-                <el-input type="text" clearable />
+                <el-input type="text" v-model="base.TagName" clearable />
             </el-col>
             <el-col :span="6">
                 <p>TagNumber:</p>
-                <el-input type="number" clearable />
+                <el-input type="number" v-model="base.TagNumber" clearable />
             </el-col>
             <el-col :span="6">
                 <p>UseTime(Sec):</p>
-                <el-input type="number" clearable />
+                <el-input type="number" v-model="base.UseTime" clearable />
             </el-col>
             <el-col :span="6">
                 <p>StoryLogId(JustOne):</p>
-                <el-input type="text" clearable />
+                <el-input type="text" v-model="base.StoryLogId" clearable />
             </el-col>
             <el-col :span="7">
                 <p>TimeSpace:</p>
                 <el-date-picker type="datetimerange" :width="100"></el-date-picker>
             </el-col>
 
-            <el-col :span="24">
+            <!-- <el-col :span="24">
                 <h5>Inside log details</h5>
             </el-col>
             <el-col :span="6">
@@ -38,12 +38,14 @@
             <el-col :span="6">
                 <p>Message:</p>
                 <el-input type="text" clearable />
+            </el-col> -->
+
+            <el-col :span="24">
+                <el-button>Search</el-button>
             </el-col>
         </el-row>
 
-        <div>
-            <el-button>Search</el-button>
-        </div>
+        
     </div>
 </template>
 
@@ -52,7 +54,24 @@
 
 export default {
     name: "SearchBar",
-    components: {},
+    components: {
+
+    },
+    data() {
+        return {
+            base: {
+                TagName: null,
+                TagNumber: null,
+                UseTime: null,
+                StoryLogId: null,
+            },
+            
+            // BaseTagName: "",
+            // BaseTagNumber: null,
+            // BaseUseTime: null,
+            // BaseStoryLogId: null,
+        }
+    }
 };
 </script>
 
