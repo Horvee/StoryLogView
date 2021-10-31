@@ -5,19 +5,19 @@
         <el-row class="rower">
             <el-col :span="6">
                 <p>TagName:</p>
-                <el-input type="text" v-model="base.TagName" clearable />
+                <el-input type="text" v-model="base.tagName" clearable />
             </el-col>
             <el-col :span="6">
                 <p>TagNumber:</p>
-                <el-input type="number" v-model="base.TagNumber" clearable />
+                <el-input type="number" v-model="base.tagNumber" clearable />
             </el-col>
             <el-col :span="6">
                 <p>UseTime(Sec):</p>
-                <el-input type="number" v-model="base.UseTime" clearable />
+                <el-input type="number" v-model="base.useTime" clearable />
             </el-col>
             <el-col :span="6">
                 <p>StoryLogId(JustOne):</p>
-                <el-input type="text" v-model="base.StoryLogId" clearable />
+                <el-input type="text" v-model="base.storyLogId" clearable />
             </el-col>
             <el-col :span="7">
                 <p>TimeSpace:</p>
@@ -41,7 +41,7 @@
             </el-col> -->
 
             <el-col :span="24">
-                <el-button>Search</el-button>
+                <el-button v-on:click="startSearch">Search</el-button>
             </el-col>
         </el-row>
 
@@ -52,6 +52,8 @@
 <script>
 // @ is an alias to /src
 
+import _ from 'lodash'
+
 export default {
     name: "SearchBar",
     components: {
@@ -60,16 +62,27 @@ export default {
     data() {
         return {
             base: {
-                TagName: null,
-                TagNumber: null,
-                UseTime: null,
-                StoryLogId: null,
+                tagName: null,
+                tagNumber: null,
+                useTime: null,
+                storyLogId: null,
             },
-            
-            // BaseTagName: "",
+            output: { // out put memory data
+                tagName: null,
+                tagNumber: null,
+                useTime: null,
+                storyLogId: null,
+            }
+            // BasetagName: "",
             // BaseTagNumber: null,
             // BaseUseTime: null,
-            // BaseStoryLogId: null,
+            // BasestoryLogId: null,
+        }
+    },
+    methods: {
+        startSearch() { 
+            // copy data to out put memory,now just simple copy data to out put object
+            this.data.output = _.clone(this.data.base);
         }
     }
 };
