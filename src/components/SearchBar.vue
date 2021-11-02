@@ -21,7 +21,7 @@
             </el-col>
             <el-col :span="7">
                 <p>TimeSpace:</p>
-                <el-date-picker type="datetimerange" :width="100"></el-date-picker>
+                <el-date-picker type="datetimerange" v-model="base.timer" :width="100"></el-date-picker>
             </el-col>
 
             <!-- <el-col :span="24">
@@ -66,12 +66,14 @@ export default {
                 tagNumber: null,
                 useTime: null,
                 storyLogId: null,
+                timer: null,
             },
             output: { // out put memory data
                 tagName: null,
                 tagNumber: null,
                 useTime: null,
                 storyLogId: null,
+                timer: null,
             }
             // BasetagName: "",
             // BaseTagNumber: null,
