@@ -5,23 +5,43 @@
         <el-row class="rower">
             <el-col :span="6">
                 <p>TagName:</p>
-                <el-input type="text" v-model="base.tagName" clearable />
+                <el-input
+                    type="text"
+                    v-model="base.tagName"
+                    clearable
+                />
             </el-col>
             <el-col :span="6">
                 <p>TagNumber:</p>
-                <el-input type="number" v-model="base.tagNumber" clearable />
+                <el-input
+                    type="number"
+                    v-model="base.tagNumber"
+                    clearable
+                />
             </el-col>
             <el-col :span="6">
                 <p>UseTime(Sec):</p>
-                <el-input type="number" v-model="base.useTime" clearable />
+                <el-input
+                    type="number"
+                    v-model="base.useTime"
+                    clearable
+                />
             </el-col>
             <el-col :span="6">
                 <p>StoryLogId(JustOne):</p>
-                <el-input type="text" v-model="base.storyLogId" clearable />
+                <el-input
+                    type="text"
+                    v-model="base.storyLogId"
+                    clearable
+                />
             </el-col>
             <el-col :span="7">
                 <p>TimeSpace:</p>
-                <el-date-picker type="datetimerange" v-model="base.timer" :width="100"></el-date-picker>
+                <el-date-picker
+                    type="datetimerange"
+                    v-model="base.timer"
+                    :width="100"
+                ></el-date-picker>
             </el-col>
 
             <!-- <el-col :span="24">
@@ -45,20 +65,17 @@
             </el-col>
         </el-row>
 
-        
     </div>
 </template>
 
 <script>
 // @ is an alias to /src
 
-import _ from 'lodash'
+import _ from "lodash";
 
 export default {
     name: "SearchBar",
-    components: {
-
-    },
+    components: {},
     data() {
         return {
             base: {
@@ -68,44 +85,55 @@ export default {
                 storyLogId: null,
                 timer: null,
             },
-            output: { // out put memory data
+            output: {
+                // out put memory data
                 tagName: null,
                 tagNumber: null,
-                useTime: null,
+                useTime: null,// millisecond
                 storyLogId: null,
                 timer: null,
-            }
+                startTime: null,
+                endTime: null,
+            },
             // BasetagName: "",
             // BaseTagNumber: null,
             // BaseUseTime: null,
             // BasestoryLogId: null,
-        }
+        };
     },
     methods: {
-        startSearch() { 
+        startSearch() {
             // copy data to out put memory,now just simple copy data to out put object
-            this.data.output = _.clone(this.data.base);
-        }
-    }
+            this.$data.output = _.cloneDeep(this.$data.base);
+            this.$data.output.useTime = this.$data.base.useTime * 1000;
+            if (!_.isEmpty(this.$data.base.timer)) {
+                // console.log(this.$data.base.timer)
+                // console.log(this.$data.base.timer[0])
+                // console.log(this.$data.base.timer[0].getTime())
+                this.$data.output.startTime = this.$data.base.timer[0].getTime();
+                this.$data.output.endTime = this.$data.base.timer[1].getTime();
+            }
+            
+
+            this.$emit("clickSearch", this.$data.output);
+        },
+    },
 };
 </script>
 
 <style scoped>
-
 .bar-layout {
     border-radius: 10px;
     box-shadow: 0 0 10px #d6d6d6;
     padding: 10px;
 }
 
-.rower>div {
+.rower > div {
     padding-left: 15px;
     padding-right: 15px;
 }
 
-.rower>div>p {
+.rower > div > p {
     text-align: left;
 }
-
-
 </style>

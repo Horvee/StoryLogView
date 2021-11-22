@@ -1,7 +1,7 @@
 <template>
     <div class="home">
         <div style="margin:10px;">
-            <search-bar/>
+            <search-bar @click-search="actionSearch" />
         </div>
         <!-- <img alt="Vue logo" src="../assets/logo.png"> -->
         <HelloWorld msg="Welcome to Your Vue.js App" />
@@ -19,5 +19,11 @@ export default {
         HelloWorld,
         SearchBar,
     },
+    methods: {
+        actionSearch: (data) => {
+            console.log(data)
+            // build es query
+        }
+    }
 };
 </script>
