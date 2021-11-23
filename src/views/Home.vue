@@ -12,6 +12,8 @@
 // @ is an alias to /src
 import HelloWorld from "@/components/HelloWorld.vue";
 import SearchBar from "../components/SearchBar.vue";
+import QueryBuilder from "../util/QueryBuilder";
+import Axios from "axios"
 
 export default {
     name: "Home",
@@ -21,9 +23,20 @@ export default {
     },
     methods: {
         actionSearch: (data) => {
-            console.log(data)
+            console.log(data);
             // build es query
-        }
-    }
+            let queryBody = QueryBuilder.build(data);
+            console.log(queryBody);
+            Axios.post('/api/storylog/_search',queryBody)
+            .then((resp) => {
+                console.log(resp);
+                if(resp.status == 200) {
+                    console.log("request is ok!")
+                }
+            }).catch((rejObj) => {
+                console.log('reject',rejObj)
+            })
+        },
+    },
 };
 </script>
