@@ -7,7 +7,7 @@
                 <p>TagName:</p>
                 <el-input
                     type="text"
-                    v-model="base.tagName"
+                    v-model.trim="base.tagName"
                     clearable
                 />
             </el-col>
@@ -15,7 +15,7 @@
                 <p>TagNumber:</p>
                 <el-input
                     type="number"
-                    v-model="base.tagNumber"
+                    v-model.number="base.tagNumber"
                     clearable
                 />
             </el-col>
@@ -23,7 +23,7 @@
                 <p>UseTime(Sec):</p>
                 <el-input
                     type="number"
-                    v-model="base.useTime"
+                    v-model.number="base.useTime"
                     clearable
                 />
             </el-col>
@@ -31,7 +31,7 @@
                 <p>StoryLogId(JustOne):</p>
                 <el-input
                     type="text"
-                    v-model="base.storyLogId"
+                    v-model.number="base.storyLogId"
                     clearable
                 />
             </el-col>

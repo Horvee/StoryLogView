@@ -27,7 +27,7 @@ export default {
             })
         }
         
-        if(!_.isNil(param.useTime)) {
+        if(!_.isNil(param.useTime) && param.useTime > 0) {
             reqBody.query.bool.must.push({
                 match: {
                     useTime: param.useTime,
@@ -55,7 +55,15 @@ export default {
             });
         }
 
-        if(!_.isNil(param.tagName)) {
+        if(!_.isNil(param.tagNumber) && param.tagNumber > 0) {
+            reqBody.query.bool.must.push({
+                match: {
+                    storyCode: param.tagNumber,
+                },
+            })
+        }
+        
+        if(!_.isNil(param.tagName) && param.tagName != '') {
             reqBody.query.bool.must.push({
                 match: {
                     storyTitle: param.tagName,
@@ -63,7 +71,7 @@ export default {
             })
         }
         
-        if(!_.isNil(param.message)) {
+        if(!_.isNil(param.message) && param.message != '') {
             reqBody.query.bool.should.push({
                 match: {
                     'logContent.logInfoList.message': param.message,

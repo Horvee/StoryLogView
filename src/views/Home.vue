@@ -32,7 +32,9 @@ export default {
                 console.log(resp);
                 if(resp.status == 200) {
                     console.log("request is ok!")
+                    return;
                 }
+                
             }).catch((rejObj) => {
                 console.log('reject',rejObj)
             })
