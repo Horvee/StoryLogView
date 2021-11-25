@@ -3,18 +3,27 @@
         <div style="margin:10px;">
             <search-bar @click-search="actionSearch" />
         </div>
-        <h3>{{ resultTotal }}</h3>
-        <el-row>
-            <el-col :span="22" v-for="item in logs" :key="item.id" class="card-item">
-                <el-col :span="6">
-                    <h2>{{ item.storyTitle }}</h2>
-                    <h3>{{ item.storyCode }}</h3>
+        <el-affix :offset="0">
+            <h3>Search total:{{ resultTotal }}</h3>
+        </el-affix>
+        
+        <el-row style="padding:0 2%">
+            <el-col :span="24" v-for="item in logs" :key="item.id" class="card-item">
+                <el-col :span="6" class="card-heard">
+                    <div>
+                        <p>{{ item.storyTitle }}</p>
+                        <p>{{ item.storyCode }}</p>
+                    </div>
                 </el-col>
-                <el-col :span="4">
-                    <h4>{{ formatTime(item.startTime) }}</h4>
-                    <h4>{{ item.useTime / 1000 }} sec</h4>
+                <el-col :span="6" class="card-heard-detail">
+                    <h4>Id:</h4>
+                    <h5>{{ item.id }}</h5>
+                    <h4>Request time:</h4>
+                    <h5>{{ formatTime(item.startTime) }}</h5>
+                    <h4>Use time:</h4>
+                    <h5>{{ formatUseTime(item.useTime) }}</h5>
                 </el-col>
-                <el-col :span="4">
+                <el-col :span="4" class="card-message">
                     <h4>first message</h4>
                     <p v-for="messageItem in formatSimpleMessageList(item.logContent)" :key="messageItem">{{ messageItem }}</p>
                 </el-col>
@@ -75,6 +84,9 @@ export default {
         formatTime(value) {
             return Moment(value).format('YYYY-MM-DD hh:mm:ss:SSS');
         },
+        formatUseTime(value) {
+            return value >= 1000 ? value / 1000 + ' SEC' : value + ' MSEC'
+        },
         formatSimpleMessageList(array) {
             let newList = [];
             for (let item of array) {
@@ -99,9 +111,39 @@ export default {
     box-shadow: 1px 1px 5px rgb(163, 163, 163);
     border-radius: 10px;
     margin-bottom: 25px;
+    padding: 10px 15px;
 }
 
+.card-heard {
+    height: 100%;
+}
+.card-heard>div {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.card-heard>div>p:nth-child(1) {
+    font-size: 35px;
+    font-weight: 600;
+    margin: 0 0 0 0;
+}
+.card-heard>div>p:nth-child(2) {
+    font-size: 25px;
+    margin: 10px 0 0 0;
+}
 
+.card-heard-detail {
+    padding-left: 15px;
+    text-align: left;
+}
+.card-heard-detail>p,h4,h5 {
+    margin: 8px 0;
+}
 
+.card-message {
+    padding-left: 15px;
+    text-align: left;
+}
 
 </style>
