@@ -5,33 +5,35 @@
         </div>
         <h3>{{ resultTotal }}</h3>
         <el-row>
-            <el-col :span="24" v-for="item in logs" :key="item.id">
+            <el-col :span="22" v-for="item in logs" :key="item.id" class="card-item">
                 <el-col :span="6">
                     <h2>{{ item.storyTitle }}</h2>
                     <h3>{{ item.storyCode }}</h3>
                 </el-col>
                 <el-col :span="4">
-                    <h4>{{ new Date(item.startTime) }}</h4>
+                    <h4>{{ formatTime(item.startTime) }}</h4>
                     <h4>{{ item.useTime / 1000 }} sec</h4>
+                </el-col>
+                <el-col :span="4">
+                    <h4>first message</h4>
+                    <p v-for="messageItem in formatSimpleMessageList(item.logContent)" :key="messageItem">{{ messageItem }}</p>
                 </el-col>
             </el-col>
         </el-row>
-        <!-- <img alt="Vue logo" src="../assets/logo.png"> -->
-        <HelloWorld msg="Welcome to Your Vue.js App" />
     </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import _ from 'lodash';
 import SearchBar from "../components/SearchBar.vue";
 import QueryBuilder from "../util/QueryBuilder";
-import Axios from "axios"
+import Axios from "axios";
+import Moment from "moment";
 
 export default {
     name: "Home",
     components: {
-        HelloWorld,
         SearchBar,
     },
     data() {
@@ -39,6 +41,9 @@ export default {
             resultTotal: null,
             logs: []
         }
+    },
+    computed: {
+        
     },
     methods: {
         actionSearch(data) {
@@ -67,6 +72,36 @@ export default {
                 console.log('reject',rejObj)
             })
         },
+        formatTime(value) {
+            return Moment(value).format('YYYY-MM-DD hh:mm:ss:SSS');
+        },
+        formatSimpleMessageList(array) {
+            let newList = [];
+            for (let item of array) {
+                if(_.isNil(item.logInfoList) || _.isEmpty(item.logInfoList)) {
+                    continue;
+                }
+                for (let singleMessage of item.logInfoList) {
+                    if(newList.length > 10) {
+                        return newList;
+                    }
+                    newList.push(singleMessage.message);
+                }
+            }
+            return newList;
+        }
     },
 };
 </script>
+
+<style scoped>
+.card-item {
+    box-shadow: 1px 1px 5px rgb(163, 163, 163);
+    border-radius: 10px;
+    margin-bottom: 25px;
+}
+
+
+
+
+</style>
