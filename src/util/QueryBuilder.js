@@ -6,6 +6,9 @@ const empty_request_url = {
             should: [],
         },
     },
+    sort: {
+
+    }
 };
 
 
@@ -18,6 +21,8 @@ export default {
         if (_.isEmpty(param)) {
             return reqBody;    
         }
+
+        reqBody.sort.startTime = { "order": "desc" };
 
         if(!_.isNil(param.storyLogId)) {
             reqBody.query.bool.must.push({

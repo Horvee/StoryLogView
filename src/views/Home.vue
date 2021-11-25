@@ -8,25 +8,33 @@
         </el-affix>
         
         <el-row style="padding:0 2%">
-            <el-col :span="24" v-for="item in logs" :key="item.id" class="card-item">
-                <el-col :span="6" class="card-heard">
-                    <div>
+            <el-col :span="24" v-for="item in logs" :key="item.id" >
+                <el-row class="card-item">
+                    <el-col :span="6" class="card-heard">
                         <p>{{ item.storyTitle }}</p>
                         <p>{{ item.storyCode }}</p>
-                    </div>
-                </el-col>
-                <el-col :span="6" class="card-heard-detail">
-                    <h4>Id:</h4>
-                    <h5>{{ item.id }}</h5>
-                    <h4>Request time:</h4>
-                    <h5>{{ formatTime(item.startTime) }}</h5>
-                    <h4>Use time:</h4>
-                    <h5>{{ formatUseTime(item.useTime) }}</h5>
-                </el-col>
-                <el-col :span="4" class="card-message">
-                    <h4>first message</h4>
-                    <p v-for="messageItem in formatSimpleMessageList(item.logContent)" :key="messageItem">{{ messageItem }}</p>
-                </el-col>
+                    </el-col>
+                    <el-col :span="6" class="card-heard-detail">
+                        <h4>Id:</h4>
+                        <p>{{ item.id }}</p>
+                        <h4>Request time:</h4>
+                        <p>{{ formatTime(item.startTime) }}</p>
+                        <h4>Use time:</h4>
+                        <p>{{ formatUseTime(item.useTime) }}</p>
+                    </el-col>
+                    <el-col :span="12" class="card-message">
+                        <div class="card-message-toolbar">
+                            <h4>Something message</h4>
+                            <div>
+                                <el-button size="mini" round>Detail</el-button>
+                            </div>
+                        </div>
+                        <!-- <h4>Something message</h4> -->
+                        <div class="card-message-list">
+                            <p v-for="messageItem in formatSimpleMessageList(item.logContent)" :key="messageItem">{{ messageItem }}</p>
+                        </div>
+                    </el-col>
+                </el-row>
             </el-col>
         </el-row>
     </div>
@@ -114,24 +122,22 @@ export default {
     padding: 10px 15px;
 }
 
+
 .card-heard {
-    height: 100%;
-}
-.card-heard>div {
-    height: 100%;
-    display: flex;
     flex-direction: column;
     justify-content: center;
+    display: flex;
 }
-.card-heard>div>p:nth-child(1) {
+.card-heard>p:nth-child(1) {
     font-size: 35px;
     font-weight: 600;
     margin: 0 0 0 0;
 }
-.card-heard>div>p:nth-child(2) {
+.card-heard>p:nth-child(2) {
     font-size: 25px;
     margin: 10px 0 0 0;
 }
+
 
 .card-heard-detail {
     padding-left: 15px;
@@ -144,6 +150,23 @@ export default {
 .card-message {
     padding-left: 15px;
     text-align: left;
+}
+
+.card-message-toolbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.card-message-list {
+    overflow-y: scroll;
+    height: 150px;
+}
+.card-message-list>p {
+    margin: 0 0 10px 0;
+}
+.card-message-list>p:last-child {
+    margin: 0;
 }
 
 </style>
