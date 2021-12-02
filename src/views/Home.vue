@@ -26,7 +26,7 @@
                         <div class="card-message-toolbar">
                             <h4>Something message</h4>
                             <div>
-                                <el-button size="mini" round>Detail</el-button>
+                                <el-button size="mini" @click="toDetail(item.id)" round>Detail</el-button>
                             </div>
                         </div>
                         <!-- <h4>Something message</h4> -->
@@ -88,6 +88,11 @@ export default {
             }).catch((rejObj) => {
                 console.log('reject',rejObj)
             })
+        },
+        toDetail(id) {
+            console.log('id:' + id);
+            // this.$router.push('/logDetail');
+            this.$router.push({ path: '/logDetail', query: { id: id } });
         },
         formatTime(value) {
             return Moment(value).format('YYYY-MM-DD hh:mm:ss:SSS');
