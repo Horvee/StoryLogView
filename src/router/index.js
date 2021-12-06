@@ -8,7 +8,7 @@ const routes = [
     name: 'home',
     component: Home,
     meta: {
-        name: 'home',
+        // name: 'Home',
         keepAlive: true
     }
   },

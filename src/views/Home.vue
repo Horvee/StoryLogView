@@ -1,8 +1,11 @@
 <template>
     <div class="home">
         <div style="margin:10px;">
+            <keep-alive>
             <search-bar @click-search="actionSearch" />
+            </keep-alive>
         </div>
+        
         <el-affix :offset="0">
             <h3>Search total:{{ resultTotal }}</h3>
         </el-affix>
@@ -52,6 +55,11 @@ export default {
     name: "Home",
     components: {
         SearchBar,
+    },
+    props(){
+        return {
+            name: 'Home'
+        }
     },
     data() {
         return {
@@ -114,8 +122,21 @@ export default {
                 }
             }
             return newList;
-        }
+        },
     },
+    mounted() {
+        console.log('home-mounted')
+    },
+    unmounted() {
+        console.log('home-unmounted')
+    },
+    activated() {
+        console.log('home-activated')
+    },
+    deactivated() {
+        console.log('home-deactivated')
+    }
+
 };
 </script>
 

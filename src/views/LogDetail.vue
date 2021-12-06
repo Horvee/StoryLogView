@@ -2,6 +2,8 @@
     <div class="home">
         <el-row v-if="logId == null">
             <el-col :span="6" class="card-heard">
+                <el-button @click="$router.back()" round>Back</el-button>
+                <!-- <p @click="router.back()">Back</p> -->
                 <p>Unknown log id</p>
             </el-col>
         </el-row>
