@@ -1,29 +1,25 @@
 <template>
     <div>
-        <div id="nav">
+        <!-- <div id="nav">
             <router-link to="/">Home</router-link> |
             <router-link to="/about">About</router-link>
-        </div>
+        </div> -->
 
         <router-view v-slot="{ Component }">
-            <transition>
-                <keep-alive>
+            <!-- <transition> -->
+                <keep-alive exclude="LogDeatil">
                     <component :is="Component" />
                 </keep-alive>
-            </transition>
+            <!-- </transition> -->
         </router-view>
 
     </div>
 </template>
 
 <script>
-// import Home from '@/views/Home.vue'
-// import About from '@/views/About.vue'
 
 export default {
     components: {
-        // Home,
-        // About
     },
     data() {
         return {

@@ -100,7 +100,10 @@ export default {
         toDetail(id) {
             console.log('id:' + id);
             // this.$router.push('/logDetail');
-            this.$router.push({ path: '/logDetail', query: { id: id } });
+            this.$router.push({
+                path: '/logDetail', 
+                query: { id: id }
+            });
         },
         formatTime(value) {
             return Moment(value).format('YYYY-MM-DD hh:mm:ss:SSS');
@@ -124,18 +127,18 @@ export default {
             return newList;
         },
     },
-    mounted() {
-        console.log('home-mounted')
-    },
-    unmounted() {
-        console.log('home-unmounted')
-    },
-    activated() {
-        console.log('home-activated')
-    },
-    deactivated() {
-        console.log('home-deactivated')
-    }
+    // mounted() {
+    //     console.log('home-mounted')
+    // },
+    // unmounted() {
+    //     console.log('home-unmounted')
+    // },
+    // activated() {
+    //     console.log('home-activated')
+    // },
+    // deactivated() {
+    //     console.log('home-deactivated')
+    // }
 
 };
 </script>

@@ -1,36 +1,47 @@
 <template>
     <div class="home">
-        <el-row v-if="logId == null">
+        <el-row v-if="logId == null || status != 1">
             <el-col :span="6" class="card-heard">
                 <el-button @click="$router.back()" round>Back</el-button>
                 <!-- <p @click="router.back()">Back</p> -->
-                <p>Unknown log id</p>
+                <p v-if="logId == null">Unknown log id, will be 3 sec back to home!</p>
+                <p v-if="status == 0">Loading data</p>
+                <p v-if="status == 2">Unknown data</p>
+                <p v-if="status == 3">Too much data (id is private key)</p>
             </el-col>
         </el-row>
-        <el-row v-else class="card-item">
-            <el-col :span="24" class="card-heard">
-                <p>{{ id }}</p>
+        <el-row v-else>
+            <el-col :span="24" class="back-btn">
+                <el-button @click="$router.back()" round>
+                    <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" data-v-152cbb9b=""><path fill="currentColor" d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64z"></path><path fill="currentColor" d="m237.248 512 265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312L237.248 512z"></path></svg> -->
+                    Back
+                </el-button>
             </el-col>
-            <el-col :span="24" class="card-heard">
-                <p>{{ item.storyTitle }} | {{ item.storyCode }}</p>
+            <!-- <el-col :span="24" class="card-heard">
+                
+            </el-col> -->
+            <el-col :span="16" class="card-heard">
+                <p>ID: {{ logId }}</p>
+                <p>Title:{{ logData.storyTitle }}</p>
+                <p>Code:{{ logData.storyCode }}</p>
             </el-col>
-            <el-col :span="6" class="card-heard-detail">
-                <h4>Id:</h4>
-                <p>{{ item.id }}</p>
+            <el-col :span="8" class="card-heard-detail">
                 <h4>Request time:</h4>
-                <p>{{ formatTime(item.startTime) }}</p>
+                <p>{{ formatTime(logData.startTime) }}</p>
+                <h4>End time:</h4>
+                <p>{{ formatTime(logData.endTime) }}</p>
                 <h4>Use time:</h4>
-                <p>{{ formatUseTime(item.useTime) }}</p>
+                <p>{{ formatUseTime(logData.useTime) }}</p>
             </el-col>
-            <el-col :span="12" class="card-message">
+            <el-col :span="24" class="card-message">
                 <div class="card-message-toolbar">
                     <h4>Something message</h4>
                     <div>
-                        <el-button size="mini" round>Detail</el-button>
+                        <!-- <el-button size="mini" round>Detail</el-button> -->
                     </div>
                 </div>
                 <div class="card-message-list">
-                    <p v-for="messageItem in formatSimpleMessageList(item.logContent)" :key="messageItem">{{ messageItem }}</p>
+                    <!-- <p v-for="messageItem in formatSimpleMessageList(item.logContent)" :key="messageItem">{{ messageItem }}</p> -->
                 </div>
             </el-col>
         </el-row>
@@ -52,14 +63,21 @@ export default {
     data() {
         return {
             logId:null,
-            resultTotal: null,
-            logs: []
+            status: 0, // 0-loading 1-done 2-unknownData 3-tooMuch
+            logData: {}
         }
     },
     created() {
-        console.log();
         // Axios.post('/api/storylog/_search',queryBody)
-        let id = '';
+        let id = this.$route.query.id;
+        console.log(id);
+        if (_.isNil(id)) {
+            setTimeout(() => {
+                this.$router.replace("/");
+            },3000);
+            return;
+        }
+        this.logId = id;
         Axios.get('/api/storylog/_search?q=id:' + id)
         .then((resp) => {
             console.log(resp);
@@ -69,13 +87,24 @@ export default {
             }
             
             let data = resp.data;
-            this.$data.resultTotal = data.hits.total.value;
+            let resultTotal = data.hits.total.value;
 
-            let logList = [];
-            for(let item of data.hits.hits) {
-                logList.push(item._source);
+            // status has 0-loading 1-done 2-unknownData 3-tooMuch (but never be happen)
+            if (resultTotal < 1) {   
+                this.status = 2;
+                return;
             }
-            this.$data.logs = logList;
+            if (resultTotal > 1) {
+                this.status = 3
+                return;
+            }
+
+            this.$data.logData = data.hits.hits[0]._source;
+            // for(let item of data.hits.hits) {
+            //     this.$data.logData = item._source;
+            // }
+
+            this.$data.status = 1;
             
         }).catch((rejObj) => {
             console.log('reject',rejObj)
@@ -118,6 +147,10 @@ export default {
     padding: 10px 15px;
 }
 
+.back-btn {
+    display: flex;
+
+}
 
 .card-heard {
     flex-direction: column;
@@ -130,6 +163,10 @@ export default {
     margin: 0 0 0 0;
 }
 .card-heard>p:nth-child(2) {
+    font-size: 25px;
+    margin: 10px 0 0 0;
+}
+.card-heard>p:nth-child(3) {
     font-size: 25px;
     margin: 10px 0 0 0;
 }
