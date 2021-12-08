@@ -33,19 +33,38 @@
                 <h4>Use time:</h4>
                 <p>{{ formatUseTime(logData.useTime) }}</p>
             </el-col>
-            <el-col :span="24" class="card-message">
-                <div class="card-message-toolbar">
-                    <h4>Something message</h4>
-                    <div>
-                        <!-- <el-button size="mini" round>Detail</el-button> -->
+            <el-col :span="24" class="message-list">
+                <div v-for="item in logData.logContent" :key="item.key">
+                    <el-row v-if="item.logInfoList == undefind || item.logInfoList == null || item.logInfoList.length < 1">
+                        <!-- empty element -->
+                    </el-row>
+
+                    <div class="message-main-view" v-else-if="item.threadType == 'MAIN'">
+                        <div class="card-item">
+                            <!-- <p>thread name: {{ item.logInfoList[0].threadName }}</p> -->
+                            <!-- <p>class name: {{ item.logInfoList[0].className }}</p> -->
+                            <!-- <p>method name: {{ item.logInfoList[0].methodName }}</p> -->
+                            <!-- <p>code location: {{ item.logInfoList[0].codeLocation }}</p> -->
+                            <p>{{ item.logInfoList[0].className }} # {{ item.logInfoList[0].methodName }} : {{ item.logInfoList[0].codeLocation }}</p>
+                            <p>message</p>
+                            <p v-for="messageItem in item.logInfoList" :key="messageItem.message">{{ messageItem.message }}</p>
+                        </div>
                     </div>
-                </div>
-                <div class="card-message-list">
-                    <!-- <p v-for="messageItem in formatSimpleMessageList(item.logContent)" :key="messageItem">{{ messageItem }}</p> -->
+                    
+                    <div class="message-child-view" v-else-if="item.threadType == 'CHILD'">
+                        <div class="card-item">
+                            <p>thread name: {{ item.logInfoList[0].threadName }}</p>
+                            <p v-for="messageItem in item.logInfoList" :key="messageItem">
+                                {{ messageItem.className }}#{{ messageItem.methodName }}:{{ messageItem.codeLocation }}  {{ messageItem.message }} 
+                            </p>
+                            <!-- <el-row v-for="messageItem in item.logInfoList" :key="messageItem">
+                                <p>{{ messageItem.className }}#{{ messageItem.methodName }}:{{ messageItem.codeLocation }}  {{ messageItem.message }} </p>
+                            </el-row> -->
+                        </div>
+                    </div>
                 </div>
             </el-col>
         </el-row>
-           
     </div>
 </template>
 
@@ -140,6 +159,11 @@ export default {
 </script>
 
 <style scoped>
+.back-btn {
+    display: flex;
+
+}
+
 .card-item {
     box-shadow: 1px 1px 5px rgb(163, 163, 163);
     border-radius: 10px;
@@ -147,9 +171,29 @@ export default {
     padding: 10px 15px;
 }
 
-.back-btn {
-    display: flex;
+.card-item>p {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
 
+.message-list {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    padding: 0 10px;
+}
+
+.message-main-view {
+
+}
+
+.message-child-view {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.message-child-view>div {
+    width: 95%;
 }
 
 .card-heard {
@@ -175,31 +219,16 @@ export default {
 .card-heard-detail {
     padding-left: 15px;
     text-align: left;
+    margin-bottom: 10px;
 }
 .card-heard-detail>p,h4,h5 {
     margin: 8px 0;
 }
 
-.card-message {
-    padding-left: 15px;
-    text-align: left;
-}
+/* ---------------------------------- */
 
-.card-message-toolbar {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
 
-.card-message-list {
-    overflow-y: scroll;
-    height: 150px;
-}
-.card-message-list>p {
-    margin: 0 0 10px 0;
-}
-.card-message-list>p:last-child {
-    margin: 0;
-}
+
+
 
 </style>
