@@ -45,8 +45,12 @@
                             <!-- <p>class name: {{ item.logInfoList[0].className }}</p> -->
                             <!-- <p>method name: {{ item.logInfoList[0].methodName }}</p> -->
                             <!-- <p>code location: {{ item.logInfoList[0].codeLocation }}</p> -->
-                            <p>{{ item.logInfoList[0].className }} # {{ item.logInfoList[0].methodName }} : {{ item.logInfoList[0].codeLocation }}</p>
-                            <p>message</p>
+                            <!-- <span class="message-tag-class-name"></span> -->
+                            <p>
+                                <span class="message-tag-class-name">{{ item.logInfoList[0].className }}</span> # 
+                                <span class="message-tag-method-name">{{ item.logInfoList[0].methodName }}</span> : 
+                                <span class="message-tag-code-local">{{ item.logInfoList[0].codeLocation }}</span>
+                            </p>
                             <p v-for="messageItem in item.logInfoList" :key="messageItem.message">{{ messageItem.message }}</p>
                         </div>
                     </div>
@@ -55,7 +59,10 @@
                         <div class="card-item">
                             <p>thread name: {{ item.logInfoList[0].threadName }}</p>
                             <p v-for="messageItem in item.logInfoList" :key="messageItem">
-                                {{ messageItem.className }}#{{ messageItem.methodName }}:{{ messageItem.codeLocation }}  {{ messageItem.message }} 
+                                <span class="message-tag-class-name">{{ messageItem.className }}</span> # 
+                                <span class="message-tag-method-name">{{ messageItem.methodName }}</span> :
+                                <span class="message-tag-code-local">{{ messageItem.codeLocation }}</span>
+                                <span class="child-message-tag-msg">{{ messageItem.message }}</span>
                             </p>
                             <!-- <el-row v-for="messageItem in item.logInfoList" :key="messageItem">
                                 <p>{{ messageItem.className }}#{{ messageItem.methodName }}:{{ messageItem.codeLocation }}  {{ messageItem.message }} </p>
@@ -195,6 +202,23 @@ export default {
 .message-child-view>div {
     width: 95%;
 }
+
+.message-tag-class-name {
+    color: #333399;
+}
+
+.message-tag-method-name {
+    color: #33CC99;
+}
+
+.message-tag-code-local {
+    color: #996699;
+}
+
+.child-message-tag-msg {
+    padding-left: 20px;
+}
+
 
 .card-heard {
     flex-direction: column;
