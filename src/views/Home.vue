@@ -8,7 +8,8 @@
         
         <el-affix :offset="0" @change="(value) => {resultBarAffix = value}">
             <div class="result-hold-bar" :class="{ 'result-hold-bar-shadow' : resultBarAffix }">
-                <p>Search total:{{ resultTotal }}</p>
+                <p v-if="resultTotal == -1">Loading...</p>
+                <p v-else>Search total:{{ resultTotal }}</p>
             </div>
         </el-affix>
         
@@ -75,6 +76,8 @@ export default {
     },
     methods: {
         actionSearch(data) {
+            this.$data.logs = [];
+            this.$data.resultTotal = -1;
             console.log(data);
             // build es query
             let queryBody = QueryBuilder.build(data);
@@ -97,6 +100,7 @@ export default {
                 this.$data.logs = logList;
                 
             }).catch((rejObj) => {
+                this.$data.resultTotal = 0;
                 console.log('reject',rejObj)
             })
         },
