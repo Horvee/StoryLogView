@@ -24,7 +24,7 @@ export default {
 
         reqBody.sort.startTime = { "order": "desc" };
 
-        if(!_.isNil(param.storyLogId)) {
+        if(!_.isNil(param.storyLogId) && param.storyLogId != '') {
             reqBody.query.bool.must.push({
                 match: {
                     storyCode: param.storyLogId,

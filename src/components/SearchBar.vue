@@ -3,46 +3,57 @@
         <h3>Search</h3>
 
         <el-row class="rower">
-            <el-col :span="6">
-                <p>TagName:</p>
-                <el-input
-                    type="text"
-                    v-model.trim="base.tagName"
-                    clearable
-                />
+            <el-col :span="12">
+                <el-row :gutter="10">
+                    <el-col :span="12">
+                        <p>TagName:</p>
+                        <el-input
+                            type="text"
+                            v-model.trim="base.tagName"
+                            clearable
+                        />
+                    </el-col>
+                    <el-col :span="12">
+                        <p>TagNumber:</p>
+                        <el-input
+                            type="number"
+                            v-model.number="base.tagNumber"
+                            clearable
+                        />
+                    </el-col>
+                    <el-col :span="12">
+                        <p>UseTime(Sec):</p>
+                        <el-input
+                            type="number"
+                            v-model.number="base.useTime"
+                            clearable
+                        />
+                    </el-col>
+                    <el-col :span="12">
+                        <p>StoryLogId(JustOne):</p>
+                        <el-input
+                            type="text"
+                            v-model.number="base.storyLogId"
+                            clearable
+                        />
+                    </el-col>
+                </el-row>
             </el-col>
-            <el-col :span="6">
-                <p>TagNumber:</p>
-                <el-input
-                    type="number"
-                    v-model.number="base.tagNumber"
-                    clearable
-                />
+            <el-col :span="12">
+                <el-row :gutter="10">
+                    <el-col :span="24">
+                        <p>TimeSpace:</p>
+                        <el-date-picker
+                            type="datetimerange"
+                            v-model="base.timer"
+                            @width="10000"
+                            class="search-bar-time-pick-full-width"
+                        ></el-date-picker>
+                    </el-col>
+                </el-row>
             </el-col>
-            <el-col :span="6">
-                <p>UseTime(Sec):</p>
-                <el-input
-                    type="number"
-                    v-model.number="base.useTime"
-                    clearable
-                />
-            </el-col>
-            <el-col :span="6">
-                <p>StoryLogId(JustOne):</p>
-                <el-input
-                    type="text"
-                    v-model.number="base.storyLogId"
-                    clearable
-                />
-            </el-col>
-            <el-col :span="7">
-                <p>TimeSpace:</p>
-                <el-date-picker
-                    type="datetimerange"
-                    v-model="base.timer"
-                    :width="100"
-                ></el-date-picker>
-            </el-col>
+
+            
 
             <!-- <el-col :span="24">
                 <h5>Inside log details</h5>
@@ -60,7 +71,7 @@
                 <el-input type="text" clearable />
             </el-col> -->
 
-            <el-col :span="24">
+            <el-col :span="24" style="margin-top : 20px">
                 <el-button v-on:click="startSearch">Search</el-button>
             </el-col>
         </el-row>
@@ -135,5 +146,11 @@ export default {
 
 .rower > div > p {
     text-align: left;
+}
+
+>>>.search-bar-time-pick-full-width {
+    width: 100% !important;
+    min-width: 100% !important;
+    /* --el-date-editor-datetimerange-width: 100%; */
 }
 </style>

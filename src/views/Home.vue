@@ -1,13 +1,15 @@
 <template>
     <div class="home">
-        <div style="margin:10px;">
+        <div style="margin: 28px;">
             <keep-alive>
             <search-bar @click-search="actionSearch" />
             </keep-alive>
         </div>
         
-        <el-affix :offset="0">
-            <h3>Search total:{{ resultTotal }}</h3>
+        <el-affix :offset="0" @change="(value) => {resultBarAffix = value}">
+            <div class="result-hold-bar" :class="{ 'result-hold-bar-shadow' : resultBarAffix }">
+                <p>Search total:{{ resultTotal }}</p>
+            </div>
         </el-affix>
         
         <el-row style="padding:0 2%">
@@ -64,7 +66,8 @@ export default {
     data() {
         return {
             resultTotal: null,
-            logs: []
+            logs: [],
+            resultBarAffix: false
         }
     },
     computed: {
@@ -144,6 +147,26 @@ export default {
 </script>
 
 <style scoped>
+.result-hold-bar {
+    width: 100%;
+    background-color: #ffffff;
+    padding: 10px 0;
+    margin-bottom: 20px;
+}
+
+.result-hold-bar>p {
+    font-size: 16px;
+    font-weight: 600;
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
+.result-hold-bar-shadow {
+    box-shadow: 0 2px 5px #dadada;
+}
+
+
+
 .card-item {
     box-shadow: 1px 1px 5px rgb(163, 163, 163);
     border-radius: 10px;

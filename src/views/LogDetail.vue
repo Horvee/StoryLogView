@@ -1,5 +1,5 @@
 <template>
-    <div class="home">
+    <div class="top">
         <el-row v-if="logId == null || status != 1">
             <el-col :span="6" class="card-heard">
                 <el-button @click="$router.back()" round>Back</el-button>
@@ -47,17 +47,19 @@
                             <!-- <p>code location: {{ item.logInfoList[0].codeLocation }}</p> -->
                             <!-- <span class="message-tag-class-name"></span> -->
                             <p>
+                                ●
                                 <span class="message-tag-class-name">{{ item.logInfoList[0].className }}</span> # 
-                                <span class="message-tag-method-name">{{ item.logInfoList[0].methodName }}</span> : 
-                                <span class="message-tag-code-local">{{ item.logInfoList[0].codeLocation }}</span>
-                            </p>
+                                <span class="message-tag-method-name">{{ item.logInfoList[0].methodName }}</span>                            </p>
                             <p v-for="messageItem in item.logInfoList" :key="messageItem.message">{{ messageItem.message }}</p>
                         </div>
                     </div>
                     
                     <div class="message-child-view" v-else-if="item.threadType == 'CHILD'">
+                        <div>
+                            <p class="message-child-view-thread-tag">CHILD</p>
+                        </div>
                         <div class="card-item">
-                            <p>thread name: {{ item.logInfoList[0].threadName }}</p>
+                            <p>● Thread name: {{ item.logInfoList[0].threadName }}</p>
                             <p v-for="messageItem in item.logInfoList" :key="messageItem">
                                 <span class="message-tag-class-name">{{ messageItem.className }}</span> # 
                                 <span class="message-tag-method-name">{{ messageItem.methodName }}</span> :
@@ -166,15 +168,18 @@ export default {
 </script>
 
 <style scoped>
+.top {
+    margin: 8px;
+}
+
 .back-btn {
     display: flex;
-
 }
 
 .card-item {
-    box-shadow: 1px 1px 5px rgb(163, 163, 163);
+    box-shadow: 0px 0px 5px rgb(163, 163, 163);
     border-radius: 10px;
-    margin-bottom: 25px;
+    margin-bottom: 18px;
     padding: 10px 15px;
 }
 
@@ -199,8 +204,23 @@ export default {
     justify-content: flex-end;
 }
 
-.message-child-view>div {
+.message-child-view>div:nth-child(1) {
+    margin-bottom: 18px;
+    width: 5%;
+    display: flex;
+    align-items: center;
+}
+
+.message-child-view>div:nth-child(2) {
     width: 95%;
+}
+
+.message-child-view-thread-tag {
+    border-radius: 10px 10px;
+    background-color: #9b9b9b;
+    color: rgb(255, 255, 255);
+    padding: 1px 5px;
+    font-size: 14px;
 }
 
 .message-tag-class-name {
@@ -212,7 +232,7 @@ export default {
 }
 
 .message-tag-code-local {
-    color: #996699;
+    color: #993399;
 }
 
 .child-message-tag-msg {
