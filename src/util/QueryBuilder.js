@@ -76,10 +76,20 @@ export default {
             })
         }
         
+        // if(!_.isNil(param.messages) && param.messages.length > 0) {
+        //     for (let item of param.messages) {
+        //         reqBody.query.bool.must.push({
+        //             match: {
+        //                 'logContent.logInfoList.message': item,
+        //             },
+        //         })
+        //     }
+        // }
+        
         if(!_.isNil(param.messages) && param.messages.length > 0) {
             for (let item of param.messages) {
-                reqBody.query.bool.should.push({
-                    match: {
+                reqBody.query.bool.must.push({
+                    match_phrase: {
                         'logContent.logInfoList.message': item,
                     },
                 })
