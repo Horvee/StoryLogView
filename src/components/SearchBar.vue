@@ -50,6 +50,22 @@
                             class="search-bar-time-pick-full-width"
                         ></el-date-picker>
                     </el-col>
+                    <el-col :span="24">
+                        <p>Message:</p>
+                    </el-col>
+                    <el-col :span="24">
+                        <el-col :span="6" v-for="(item) in base.messages" :key="item">
+                            <el-input
+                                type="text"
+                                v-model="item.text"
+                                clearable
+                            />
+                        </el-col>
+                        <el-col :span="7">
+                            <el-button v-on:click="changeMessageGroup(1)">Add</el-button>
+                            <el-button v-on:click="changeMessageGroup(-1)">Remove</el-button>
+                        </el-col>
+                    </el-col>
                 </el-row>
             </el-col>
 
@@ -95,6 +111,7 @@ export default {
                 useTime: null,
                 storyLogId: null,
                 timer: null,
+                messages: [{ text : null }]
             },
             output: {
                 // out put memory data
@@ -105,6 +122,7 @@ export default {
                 timer: null,
                 startTime: null,
                 endTime: null,
+                messages: []
             },
             // BasetagName: "",
             // BaseTagNumber: null,
@@ -116,6 +134,7 @@ export default {
         startSearch() {
             // copy data to out put memory,now just simple copy data to out put object
             this.$data.output = _.cloneDeep(this.$data.base);
+            
             this.$data.output.useTime = this.$data.base.useTime * 1000;
             if (!_.isEmpty(this.$data.base.timer)) {
                 // console.log(this.$data.base.timer)
@@ -124,10 +143,27 @@ export default {
                 this.$data.output.startTime = this.$data.base.timer[0].getTime();
                 this.$data.output.endTime = this.$data.base.timer[1].getTime();
             }
-            
+
+            this.$data.output.messages = [];
+            for(let item of this.$data.base.messages) {
+                if(_.isNil(item.text) || item.text == '') {
+                    continue;
+                }
+                this.$data.output.messages.push(item.text);
+            }
 
             this.$emit("clickSearch", this.$data.output);
         },
+        changeMessageGroup(value) {
+            // value 1 or -1
+            if(value == -1) {
+                if(this.$data.base.messages.length <= 1) return;
+                this.$data.base.messages.splice(this.$data.base.messages.length - 1, 1);
+            } else {
+                if(this.$data.base.messages.length >= 6) return;
+                this.$data.base.messages.push({ text : null });
+            }
+        }
     },
 };
 </script>

@@ -76,12 +76,14 @@ export default {
             })
         }
         
-        if(!_.isNil(param.message) && param.message != '') {
-            reqBody.query.bool.should.push({
-                match: {
-                    'logContent.logInfoList.message': param.message,
-                },
-            })
+        if(!_.isNil(param.messages) && param.messages.length > 0) {
+            for (let item of param.messages) {
+                reqBody.query.bool.should.push({
+                    match: {
+                        'logContent.logInfoList.message': item,
+                    },
+                })
+            }
         }
 
         return reqBody;

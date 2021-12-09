@@ -1,7 +1,7 @@
 <template>
     <div class="top">
         <el-row v-if="logId == null || status != 1">
-            <el-col :span="6" class="card-heard">
+            <el-col :span="24" class="simple-message-view">
                 <el-button @click="$router.back()" round>Back</el-button>
                 <!-- <p @click="router.back()">Back</p> -->
                 <p v-if="logId == null">Unknown log id, will be 3 sec back to home!</p>
@@ -113,6 +113,7 @@ export default {
                 console.log("request fail!")
                 return;
             }
+            // if(_.isNil(null))return;
             
             let data = resp.data;
             let resultTotal = data.hits.total.value;
@@ -174,6 +175,11 @@ export default {
 
 .back-btn {
     display: flex;
+}
+
+.simple-message-view>p {
+    font-size: 35px;
+    font-weight: 600;
 }
 
 .card-item {
