@@ -187,6 +187,5 @@ export default {
 >>>.search-bar-time-pick-full-width {
     width: 100% !important;
     min-width: 100% !important;
-    /* --el-date-editor-datetimerange-width: 100%; */
 }
 </style>
