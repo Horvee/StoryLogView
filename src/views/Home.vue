@@ -32,6 +32,10 @@
                         <div class="card-message-toolbar">
                             <h4>Something message</h4>
                             <div>
+                                <el-button size="mini" @click="toDetailNewWindow(item.id)" :icon="postcard" round>
+                                    <el-icon :size="10"><copy-document /></el-icon>
+                                    New window
+                                </el-button>
                                 <el-button size="mini" @click="toDetail(item.id)" round>Detail</el-button>
                             </div>
                         </div>
@@ -53,11 +57,13 @@ import SearchBar from "../components/SearchBar.vue";
 import QueryBuilder from "../util/QueryBuilder";
 import Axios from "axios";
 import Moment from "moment";
+import { CopyDocument } from '@element-plus/icons-vue'
 
 export default {
     name: "Home",
     components: {
         SearchBar,
+        CopyDocument
     },
     props(){
         return {
@@ -111,6 +117,9 @@ export default {
                 path: '/logDetail', 
                 query: { id: id }
             });
+        },
+        toDetailNewWindow(id) {
+            window.open('#/logDetail?id=' + id);
         },
         formatTime(value) {
             return Moment(value).format('YYYY-MM-DD hh:mm:ss:SSS');
