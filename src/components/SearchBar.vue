@@ -54,7 +54,7 @@
                         <p>Message:</p>
                     </el-col>
                     <el-col :span="24">
-                        <el-col :span="6" v-for="(item) in base.messages" :key="item">
+                        <el-col :span="6" v-for="(item) in base.messages" :key="item" style="margin-bottom: 15px;">
                             <el-input
                                 type="text"
                                 v-model="item.text"
@@ -66,6 +66,26 @@
                             <el-button v-on:click="changeMessageGroup(-1)">Remove</el-button>
                         </el-col>
                     </el-col>
+                    <!-- <el-col :span="24">
+                        <el-row v-for="(item,index) in base.messages" :key="item" style="margin-bottom: 15px;">
+                            <el-col :span="20">
+                                <el-input
+                                    type="text"
+                                    v-model="item.text"
+                                    clearable
+                                />
+                            </el-col>
+                            <el-col :span="4">
+                                <el-button v-on:click="changeMessageGroupFormIndex(index, -1)">
+                                    <el-icon><Delete></Delete></el-icon>
+                                    Remove
+                                </el-button>
+                            </el-col>
+                        </el-row>
+                        <el-col :span="24">
+                            <el-button v-on:click="changeMessageGroup(1)">Add</el-button>
+                        </el-col>
+                    </el-col> -->
                 </el-row>
             </el-col>
 
@@ -99,10 +119,13 @@
 // @ is an alias to /src
 
 import _ from "lodash";
+import { Delete } from '@element-plus/icons-vue'
 
 export default {
     name: "SearchBar",
-    components: {},
+    components: {
+        Delete
+    },
     data() {
         return {
             base: {
@@ -162,6 +185,16 @@ export default {
             } else {
                 if(this.$data.base.messages.length >= 6) return;
                 this.$data.base.messages.push({ text : null });
+            }
+        },
+        changeMessageGroupFormIndex(index, value) {
+            // value 1 or -1
+            if(value == -1) {
+                if(this.$data.base.messages.length <= 1) return;
+                this.$data.base.messages.splice(index, 1);
+            } else {
+                if(this.$data.base.messages.length >= 6) return;
+                this.$data.base.messages.includes(index, { text : null });
             }
         }
     },
