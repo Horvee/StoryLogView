@@ -13,7 +13,6 @@
         <el-row v-else>
             <el-col :span="24" class="back-btn">
                 <el-button @click="$router.back()" round>
-                    <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" data-v-152cbb9b=""><path fill="currentColor" d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64z"></path><path fill="currentColor" d="m237.248 512 265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312L237.248 512z"></path></svg> -->
                     Back
                 </el-button>
             </el-col>
@@ -49,7 +48,8 @@
                             <p>
                                 ●
                                 <span class="message-tag-class-name">{{ item.logInfoList[0].className }}</span> # 
-                                <span class="message-tag-method-name">{{ item.logInfoList[0].methodName }}</span>                            </p>
+                                <span class="message-tag-method-name">{{ item.logInfoList[0].methodName }}</span>                            
+                            </p>
                             <p v-for="messageItem in item.logInfoList" :key="messageItem.message">{{ messageItem.message }}</p>
                         </div>
                     </div>

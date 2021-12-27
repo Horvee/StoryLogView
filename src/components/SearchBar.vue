@@ -61,9 +61,9 @@
                                 clearable
                             />
                         </el-col>
-                        <el-col :span="7">
-                            <el-button v-on:click="changeMessageGroup(1)">Add</el-button>
-                            <el-button v-on:click="changeMessageGroup(-1)">Remove</el-button>
+                        <el-col :span="8">
+                            <el-button v-on:click="changeMessageGroup(1)"><el-icon><plus /></el-icon> Add</el-button>
+                            <el-button v-on:click="changeMessageGroup(-1)"><el-icon><minus /></el-icon> Remove</el-button>
                         </el-col>
                     </el-col>
                     <!-- <el-col :span="24">
@@ -119,12 +119,14 @@
 // @ is an alias to /src
 
 import _ from "lodash";
-import { Delete } from '@element-plus/icons-vue'
+import { Delete, Plus, Minus  } from '@element-plus/icons-vue'
 
 export default {
     name: "SearchBar",
     components: {
-        Delete
+        Delete,
+        Plus,
+        Minus
     },
     data() {
         return {
